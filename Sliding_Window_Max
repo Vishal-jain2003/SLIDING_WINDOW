@@ -1,0 +1,37 @@
+// WE ARE USING DEQUE HERE BECAUSE WHENEVER WE NEED TO OUT ELEMENT WE CAN DO IT BY DEQUE WE HAVE TO KEEP WINDOW SIZE BY K SO AFTER EVERY ITERATION IF OUR WINDOW EXTENDING SIZE K THEN WE USE DEQUE 
+IT REMOVE FRONT ELEMENT BY DQ.POLL() OR DQ.removeFirst() it have .removeFirst .removeLast addFirst addLast peekLast 
+1. if deque increases size after k remove element removefirst
+2.if a[i]>dq.peekLast while loop dq.removeLast 
+3.add element index in dq
+4.now add answer to list if i>=k-1 it means 0 1 2 it's now on index 2 now add answer for every k window size 
+
+class Solution {
+    public int[] maxSlidingWindow(int[] a , int k) {
+        int n =a.length;
+       int[] ans = new int[n-k+1];
+       Deque<Integer>dq = new ArrayDeque<>();
+       int l=0;
+       for (int i=0;i<n;i++)
+       {
+          // out of bound
+          if (!dq.isEmpty() && dq.peekFirst()<=i-k)
+          {
+            dq.removeFirst();
+          }
+          // if in deque element less than current element remove it
+          while (!dq.isEmpty() && a[i]>=a[dq.peekLast()])
+          {
+            dq.removeLast();
+          }
+          dq.addLast(i);
+          // now store ans in array
+          if (i>=k-1)
+          {
+            ans[l++]=a[dq.peekFirst()];
+          }
+          
+
+       }
+       return ans;
+    }
+}
